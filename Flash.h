@@ -67,18 +67,18 @@ public:
 class _FLASH_STRING : public _Printable
 {
 public:
-  _FLASH_STRING(const prog_char *arr);
+  _FLASH_STRING(const char *arr PROGMEM);
 
   size_t length() const 
   { return strlen_P(_arr); }
 
   char *copy(char *to, size_t size = -1, size_t offset = 0) const 
   { 
-    return size == -1 ?
+    return size == (size_t)-1 ?
       strcpy_P(to, _arr + offset) : strncpy_P(to, _arr + offset, size);
   }
 
-  const prog_char *access() const 
+  const char *access() const PROGMEM 
   { return _arr; }
 
   const _Printable &Printable() const
@@ -90,7 +90,7 @@ public:
   void print(Print &stream) const;
 
 private:
-  const prog_char *_arr;
+  const char *_arr PROGMEM;;
 };
 
 /* _FLASH_ARRAY template class.  Use the FLASH_ARRAY() macro to create these. */
@@ -180,7 +180,7 @@ private:
 class _FLASH_STRING_ARRAY : public _Printable
 {
 public:
-  _FLASH_STRING_ARRAY(const prog_char **arr, size_t count) : _arr(arr), _size(count)
+  _FLASH_STRING_ARRAY(const char **arr PROGMEM, size_t count) : _arr(arr), _size(count)
   { }
 
   size_t count() const 
@@ -200,7 +200,7 @@ public:
   }
 
 private:
-  const prog_char **_arr;
+  const char **_arr PROGMEM;
   size_t _size;
 };
 
