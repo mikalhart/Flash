@@ -72,10 +72,10 @@ public:
   size_t length() const 
   { return strlen_P(_arr); }
 
-  char *copy(char *to, size_t size = -1, size_t offset = 0) const 
+  size_t copy(char *to, size_t size = -1, size_t offset = 0) const 
   { 
-    return size == -1 ?
-      strcpy_P(to, _arr + offset) : strncpy_P(to, _arr + offset, size);
+    return size == (size_t)-1 ?
+      strlen_P(strcpy_P(to, _arr + offset)) : strncpy_P(to, _arr + offset, size);
   }
 
   const prog_char *access() const 
