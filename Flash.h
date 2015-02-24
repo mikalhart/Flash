@@ -87,7 +87,7 @@ public:
   }
 
 #if ARDUINO >= 150
-  onst char *access() const PROGMEM { return _arr; }
+  const char *access() const PROGMEM { return _arr; }
 #else
   const prog_char *access() const { return _arr; }
 #endif
