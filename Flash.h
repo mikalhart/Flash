@@ -67,19 +67,30 @@ public:
 class _FLASH_STRING : public _Printable
 {
 public:
+#if ARDUINO >= 150
+  _FLASH_STRING(const char *arr PROGMEM);
+#else
   _FLASH_STRING(const prog_char *arr);
+#endif
 
   size_t length() const 
   { return strlen_P(_arr); }
 
   char *copy(char *to, size_t size = -1, size_t offset = 0) const 
   { 
+#if ARDUINO >= 150
+    return size == (size_t)-1 ?
+#else
     return size == -1 ?
+#endif
       strcpy_P(to, _arr + offset) : strncpy_P(to, _arr + offset, size);
   }
 
-  const prog_char *access() const 
-  { return _arr; }
+#if ARDUINO >= 150
+  onst char *access() const PROGMEM { return _arr; }
+#else
+  const prog_char *access() const { return _arr; }
+#endif
 
   const _Printable &Printable() const
   { return *this; }
@@ -90,7 +101,12 @@ public:
   void print(Print &stream) const;
 
 private:
+#if ARDUINO >= 150
+  const char *_arr PROGMEM;
+#else
   const prog_char *_arr;
+#endif
+  
 };
 
 /* _FLASH_ARRAY template class.  Use the FLASH_ARRAY() macro to create these. */
@@ -180,8 +196,11 @@ private:
 class _FLASH_STRING_ARRAY : public _Printable
 {
 public:
-  _FLASH_STRING_ARRAY(const prog_char **arr, size_t count) : _arr(arr), _size(count)
-  { }
+#if ARDUINO >= 150
+  _FLASH_STRING_ARRAY(const char **arr PROGMEM, size_t count) : _arr(arr), _size(count) {}
+#else
+  _FLASH_STRING_ARRAY(const prog_char **arr, size_t count) : _arr(arr), _size(count) {}
+#endif
 
   size_t count() const 
   { return _size; }
@@ -200,7 +219,12 @@ public:
   }
 
 private:
+#if ARDUINO >= 150
+  const char **_arr PROGMEM;
+#else
   const prog_char **_arr;
+#endif
+  
   size_t _size;
 };
 
