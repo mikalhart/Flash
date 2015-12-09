@@ -88,7 +88,9 @@ public:
   { return static_cast<char>(pgm_read_byte(_arr + index)); }
 
   void print(Print &stream) const;
-
+  
+  unsigned int strncmp(const char *s2, size_t n);
+  
 private:
   const prog_char *_arr;
 };
