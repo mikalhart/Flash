@@ -47,7 +47,7 @@
 
 // Example: FLASH_STRING_ARRAY(nums, PSTR("One"), PSTR("Two"), PSTR("Three"), PSTR("Four"), PSTR("Five"));
 #define FLASH_STRING_ARRAY(name, values...) \
-  const PROGMEM char *name##_arr[] = { values }; \
+  const char *name##_arr[] PROGMEM = { values }; \
   _FLASH_STRING_ARRAY name(name##_arr, sizeof(name##_arr) / sizeof(name##_arr[0]));
 
 #ifndef ARDUINO_CORE_PRINTABLE_SUPPORT
