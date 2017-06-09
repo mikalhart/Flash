@@ -19,9 +19,11 @@
 */
 
 #include "Flash.h"
-
-_FLASH_STRING::_FLASH_STRING(const prog_char *arr) : _arr(arr) 
-{ }
+#if ARDUINO >= 150
+  _FLASH_STRING::_FLASH_STRING(const char *arr PROGMEM) : _arr(arr) {}
+#else
+  _FLASH_STRING::_FLASH_STRING(const prog_char *arr) : _arr(arr) {}
+#endif
 
 void _FLASH_STRING::print(Print &stream) const
 {
