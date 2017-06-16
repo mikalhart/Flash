@@ -99,7 +99,9 @@ public:
   { return static_cast<char>(pgm_read_byte(_arr + index)); }
 
   void print(Print &stream) const;
-
+  
+  unsigned int strncmp(const char *s2, size_t n);
+  
 private:
 #if ARDUINO >= 150
   const char *_arr PROGMEM;
